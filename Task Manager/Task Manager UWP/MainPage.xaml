@@ -7,7 +7,62 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.DataContext>
+        <Binding Source="{StaticResource MainViewVm}"/>
+    </Page.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="Black" BorderBrush="Black">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource HeaderBtn}" 
+                    Content="&#xE8FD;" 
+                    BorderThickness="0"
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch"
+                    Grid.Column="0" Background="Black"
+                    x:Name="HumburgerMenuBtn"
+                    Click="HumburgerMenuBtn_OnClick"/>
+            <TextBlock Grid.Column="1" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Width="150" Text="{Binding CurrentPageName, Mode=OneWay}"/>
+            <RelativePanel HorizontalAlignment="Right" Grid.Column="2" Background="#696969">
+                <Button Style="{StaticResource HeaderBtn}" x:Name="SearchBtn" Content="&#xE094;"
+                        RelativePanel.AlignRightWithPanel="True" Background="#696969" Width="50" Height="50"
+                        Command="{Binding SearchCommand}" BorderThickness="0"/>
+                <TextBox RelativePanel.LeftOf="SearchBtn" Width="200" BorderThickness="0" Height="50" Padding="14" PlaceholderText="Search" Text="{Binding SearchText}"/>
+            </RelativePanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <SplitView x:Name="SplitView" CompactPaneLength="50" DisplayMode="CompactInline" OpenPaneLength="200">
+                <SplitView.Pane>
+                    <ListBox SelectionChanged="Selector_OnSelectionChanged">
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Width="37" Margin="3,0,0,0" 
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" Text="&#59263;"/>
+                                <TextBlock Text="Tasks" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="18" FontFamily="Segoe MDL2 Assets" Width="37" Margin="3,0,0,0" 
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" Text="&#xE713;"/>
+                                <TextBlock Text="Settings" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </SplitView.Pane>
+                <SplitView.Content>
+                    <Frame SourcePageType="{Binding PageType, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </SplitView.Content>
+            </SplitView>
+        </Grid>
 
     </Grid>
 </Page>

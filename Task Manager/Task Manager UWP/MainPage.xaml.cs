@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Task_Manager_UWP.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,6 +26,19 @@ namespace Task_Manager_UWP
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void HumburgerMenuBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
+        }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is MainViewVm m)
+            {
+                m.ListBoxSelectionChangedCommand.Execute((sender as ListBox)?.SelectedIndex);
+            }
         }
     }
 }
