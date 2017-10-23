@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -24,15 +26,36 @@ namespace Task_Manager_UWP.Views
     /// </summary>
     public sealed partial class TasksPage : Page
     {
+        private object _draggingElementVm;
+
         public TasksPage()
         {
             this.InitializeComponent();
         }
 
-        public async void ShowMessage(string msg)
+        private void Task_DragOver(object sender, DragEventArgs e)
         {
-            await new MessageDialog(msg).ShowAsync();
+            e.AcceptedOperation = DataPackageOperation.Move;
         }
 
+        private void Task_OnDrop(object sender, DragEventArgs e)
+        {
+            if (sender is SimpleTask s)
+            {
+                ItemsControl.ItemsSource = Swap(ItemsControl.ItemsSource as ObservableCollection<object>, s.DataContext,
+                    _draggingElementVm);
+            }
+        }
+
+        private void Task_DragStarting(UIElement sender, DragStartingEventArgs args)
+        {
+            if (sender is SimpleTask s) _draggingElementVm = s.DataContext;
+        }
+
+        private ObservableCollection<object> Swap(ObservableCollection<object> enumerable, object A, object B)
+        {
+            var res = from str in enumerable select str == A ? B : str == B ? A : str;
+            return new ObservableCollection<object>(res);
+        }
     }
 }

@@ -8,13 +8,13 @@
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="SimpleTaskDataTemplate">
-            <local:SimpleTask/>
+            <local:SimpleTask AllowDrop="True" CanDrag="True" DragOver="Task_DragOver" Drop="Task_OnDrop" DragStarting="Task_DragStarting"/>
         </DataTemplate>
         <local:TaskVmTemplateSelector x:Key="TaskVmTemplateSelector" TasksPageTemplate="{StaticResource SimpleTaskDataTemplate}"/>
     </Page.Resources>
     <Grid Background="White">
         <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding TasksVmCollection}" ItemTemplateSelector="{StaticResource TaskVmTemplateSelector}">
+            <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding TasksVmCollection}" ItemTemplateSelector="{StaticResource TaskVmTemplateSelector}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>
