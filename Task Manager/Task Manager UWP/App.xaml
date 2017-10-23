@@ -3,12 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Task_Manager_UWP"
-    xmlns:eventArgs="using:Windows.UI.Xaml.Controls"
     xmlns:converters="using:UWPMVVMLib.Converters"
-    xmlns:viewModels="using:Task_Manager_UWP.ViewModels"
+    xmlns:viewModel="using:Task_Manager_UWP.ViewModel"
     RequestedTheme="Light">
     <Application.Resources>
-        <viewModels:MainViewVm x:Key="MainViewVm"/>
+        <viewModel:MainViewVm x:Key="MainViewVm"/>
         <Style TargetType="Button" x:Key="HeaderBtn">
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Foreground"  Value="White"/>

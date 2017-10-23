@@ -59,7 +59,7 @@
                     </ListBox>
                 </SplitView.Pane>
                 <SplitView.Content>
-                    <Frame SourcePageType="{Binding PageType, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Frame Content="{Binding CurrentPage, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </SplitView.Content>
             </SplitView>
         </Grid>
