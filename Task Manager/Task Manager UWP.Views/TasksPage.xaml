@@ -10,7 +10,10 @@
         <DataTemplate x:Key="SimpleTaskDataTemplate">
             <local:SimpleTask AllowDrop="True" CanDrag="True" DragOver="Task_DragOver" Drop="Task_OnDrop" DragStarting="Task_DragStarting"/>
         </DataTemplate>
-        <local:TaskVmTemplateSelector x:Key="TaskVmTemplateSelector" TasksPageTemplate="{StaticResource SimpleTaskDataTemplate}"/>
+        <DataTemplate x:Key="ProgressTaskDataTemplate">
+            <local:ProgressTask AllowDrop="True" CanDrag="True" DragOver="Task_DragOver" Drop="Task_OnDrop" DragStarting="Task_DragStarting"/>
+        </DataTemplate>
+        <local:TaskVmTemplateSelector x:Key="TaskVmTemplateSelector" SimpleTaskTemplate="{StaticResource SimpleTaskDataTemplate}" ProgressTaskTemplate="{StaticResource ProgressTaskDataTemplate}"/>
     </Page.Resources>
     <Grid Background="White">
         <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">

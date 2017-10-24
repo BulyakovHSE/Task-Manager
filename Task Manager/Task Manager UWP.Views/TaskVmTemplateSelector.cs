@@ -10,13 +10,16 @@ namespace Task_Manager_UWP.Views
 {
     public class TaskVmTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate TasksPageTemplate { get; set; }
+        public DataTemplate SimpleTaskTemplate { get; set; }
+
+        public DataTemplate ProgressTaskTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item)
         {
+            //TODO: Add code if new TaskControl developed
             Type type = item.GetType();
-            if (type.Name == "SimpleTaskVm") return TasksPageTemplate;
-            return TasksPageTemplate;
+            if (type.Name == "SimpleTaskVm") return SimpleTaskTemplate;
+            return ProgressTaskTemplate;
         }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)

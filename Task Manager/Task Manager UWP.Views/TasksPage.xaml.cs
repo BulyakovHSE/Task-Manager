@@ -40,7 +40,7 @@ namespace Task_Manager_UWP.Views
 
         private void Task_OnDrop(object sender, DragEventArgs e)
         {
-            if (sender is SimpleTask s)
+            if (sender is UserControl s)
             {
                 ItemsControl.ItemsSource = Swap(ItemsControl.ItemsSource as ObservableCollection<object>, s.DataContext,
                     _draggingElementVm);
@@ -49,7 +49,7 @@ namespace Task_Manager_UWP.Views
 
         private void Task_DragStarting(UIElement sender, DragStartingEventArgs args)
         {
-            if (sender is SimpleTask s) _draggingElementVm = s.DataContext;
+            if (sender is UserControl s) _draggingElementVm = s.DataContext;
         }
 
         private ObservableCollection<object> Swap(ObservableCollection<object> enumerable, object A, object B)

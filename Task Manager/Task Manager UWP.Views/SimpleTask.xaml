@@ -17,6 +17,6 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Text="{Binding Name}" TextWrapping="WrapWholeWords" Margin="5,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <TextBlock Grid.Column="1" Text="{Binding Description}" TextWrapping="WrapWholeWords" Margin="5,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <CheckBox Grid.Column="2" IsChecked="{Binding IsDone}" Margin="5,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <CheckBox Grid.Column="2" IsChecked="{Binding IsDone, Mode=TwoWay}" Margin="5,5,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </UserControl>
