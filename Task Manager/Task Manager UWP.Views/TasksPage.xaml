@@ -7,17 +7,34 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
+        <MenuFlyout x:Key="TaskFlyout">
+            <MenuFlyoutItem Text="Edit">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE70F;"/>
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="To history">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE8DE;"/>
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="Delete">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE74D;"/>
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
         <DataTemplate x:Key="SimpleTaskDataTemplate">
-            <local:SimpleTask AllowDrop="True" CanDrag="True" DragOver="Task_DragOver" Drop="Task_OnDrop" DragStarting="Task_DragStarting"/>
+            <local:SimpleTask AllowDrop="True" CanDrag="True" DragOver="Task_DragOver" Drop="Task_OnDrop" DragStarting="Task_DragStarting" ContextFlyout="{StaticResource TaskFlyout}"/>
         </DataTemplate>
         <DataTemplate x:Key="ProgressTaskDataTemplate">
-            <local:ProgressTask AllowDrop="True" CanDrag="True" DragOver="Task_DragOver" Drop="Task_OnDrop" DragStarting="Task_DragStarting"/>
+            <local:ProgressTask AllowDrop="True" CanDrag="True" DragOver="Task_DragOver" Drop="Task_OnDrop" DragStarting="Task_DragStarting" ContextFlyout="{StaticResource TaskFlyout}"/>
         </DataTemplate>
         <local:TaskVmTemplateSelector x:Key="TaskVmTemplateSelector" SimpleTaskTemplate="{StaticResource SimpleTaskDataTemplate}" ProgressTaskTemplate="{StaticResource ProgressTaskDataTemplate}"/>
     </Page.Resources>
     <Grid Background="White">
         <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding TasksVmCollection}" ItemTemplateSelector="{StaticResource TaskVmTemplateSelector}">
+            <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding TasksVmCollection, Mode=TwoWay}" ItemTemplateSelector="{StaticResource TaskVmTemplateSelector}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>

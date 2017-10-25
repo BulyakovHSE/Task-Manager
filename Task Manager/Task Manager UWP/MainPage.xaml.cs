@@ -24,14 +24,9 @@ namespace Task_Manager_UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private TasksPageVm _tasksPage;
-        private SettingsPageVm _settingsPage;
-
         public MainPage()
         {
             this.InitializeComponent();
-            _tasksPage = new TasksPageVm();
-            _settingsPage = new SettingsPageVm();
         }
 
         private void HumburgerMenuBtn_OnClick(object sender, RoutedEventArgs e)
@@ -41,7 +36,7 @@ namespace Task_Manager_UWP
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is MainViewVm m)
+            if (DataContext is MainPageVm m)
             {
                 m.ListBoxSelectionChangedCommand.Execute((sender as ListBox)?.SelectedIndex);
             }

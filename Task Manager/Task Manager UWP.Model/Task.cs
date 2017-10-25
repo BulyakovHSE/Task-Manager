@@ -9,11 +9,6 @@ namespace Task_Manager_UWP.Model
     [Serializable]
     public class Task
     {
-        public Task(TaskType taskType)
-        {
-            GetTaskType = taskType;
-        }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -26,7 +21,7 @@ namespace Task_Manager_UWP.Model
 
         public string PointName { get; set; }
 
-        public TaskType GetTaskType { get; }
+        public TaskType GetTaskType { get; set; }
     }
 
     [Serializable]

@@ -9,10 +9,8 @@ using Task = Task_Manager_UWP.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
-    public class SimpleTaskVm : ViewModelBase
+    public class SimpleTaskVm : BaseTaskVm
     {
-        private Task _task;
-
         public string Name
         {
             get => _task.Name;
@@ -31,11 +29,6 @@ namespace Task_Manager_UWP.ViewModel
             set { _task.IsDone = value; OnPropertyChanged(); }
         }
 
-        public Task GetTask => _task;
-
-        public SimpleTaskVm(Task task)
-        {
-            _task = task;
-        }
+        public SimpleTaskVm(Task task) : base(task) { }
     }
 }

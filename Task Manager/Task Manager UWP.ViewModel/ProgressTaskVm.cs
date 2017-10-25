@@ -9,10 +9,8 @@ using Task = Task_Manager_UWP.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
-    public class ProgressTaskVm : ViewModelBase
+    public class ProgressTaskVm : BaseTaskVm
     {
-        private Task _task;
-
         public string Name
         {
             get => _task.Name;
@@ -56,11 +54,6 @@ namespace Task_Manager_UWP.ViewModel
             DonePoints = _task.AllPointsCount;
         });
 
-        public Task GetTask => _task;
-
-        public ProgressTaskVm(Task task)
-        {
-            _task = task;
-        }
+        public ProgressTaskVm(Task task) : base(task) { }
     }
 }

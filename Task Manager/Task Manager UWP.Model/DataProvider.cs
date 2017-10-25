@@ -27,7 +27,7 @@ namespace Task_Manager_UWP.Model
         public static async Task<IEnumerable<T>> Deserialize()
         {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
-            StorageFile file = folder.GetFileAsync("Tasks.json").GetResults();
+            StorageFile file = await folder.GetFileAsync("Tasks.json");
             string json = await FileIO.ReadTextAsync(file);
             return JsonConvert.DeserializeObject<IEnumerable<T>>(json);
         }

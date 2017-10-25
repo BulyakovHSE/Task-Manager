@@ -10,7 +10,7 @@
     <Page.DataContext>
         <Binding Source="{StaticResource MainViewVm}"/>
     </Page.DataContext>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -35,7 +35,20 @@
                 <Button Style="{StaticResource HeaderBtn}" x:Name="SearchBtn" Content="&#xE094;"
                         RelativePanel.AlignRightWithPanel="True" Background="#696969" Width="50" Height="50"
                         Command="{Binding SearchCommand}" BorderThickness="0"/>
-                <TextBox RelativePanel.LeftOf="SearchBtn" Width="200" BorderThickness="0" Height="50" Padding="14" PlaceholderText="Search" Text="{Binding SearchText}"/>
+                <TextBox RelativePanel.LeftOf="SearchBtn" 
+                         Width="200" BorderThickness="0" Height="50" Padding="14" 
+                         PlaceholderText="Search" 
+                         Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Canvas Width="200">
+                    <StackPanel Orientation="Vertical" 
+                                HorizontalAlignment="Stretch" Canvas.Top="50" Background="DarkGray" Canvas.ZIndex="2">
+                        <TextBlock Text="1"/>
+                        <TextBlock Text="2"/>
+                        <TextBlock Text="3"/>
+                        <TextBlock Text="4"/>
+                        <TextBlock Text="5"/>
+                    </StackPanel>
+                </Canvas>
             </RelativePanel>
         </Grid>
         <Grid Grid.Row="1">
@@ -59,7 +72,7 @@
                     </ListBox>
                 </SplitView.Pane>
                 <SplitView.Content>
-                    <Frame Content="{Binding CurrentPage, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Frame Content="{Binding CurrentPage, Mode=TwoWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="1"/>
                 </SplitView.Content>
             </SplitView>
         </Grid>
