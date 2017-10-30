@@ -54,6 +54,6 @@ namespace Task_Manager_UWP.ViewModel
             DonePoints = _task.AllPointsCount;
         });
 
-        public ProgressTaskVm(Task task) : base(task) { }
+        public ProgressTaskVm(Task task, TasksPageVm parentVm) : base(task, parentVm) { }
     }
 }

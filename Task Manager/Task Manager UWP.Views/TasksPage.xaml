@@ -13,12 +13,7 @@
                     <FontIcon Glyph="&#xE70F;"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="To history">
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8DE;"/>
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Delete">
+            <MenuFlyoutItem Text="Delete" Command="{Binding DeleteTaskCommand, Source={Binding DataContext}}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Source={Binding DataContext}}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE74D;"/>
                 </MenuFlyoutItem.Icon>
@@ -33,7 +28,17 @@
         <local:TaskVmTemplateSelector x:Key="TaskVmTemplateSelector" SimpleTaskTemplate="{StaticResource SimpleTaskDataTemplate}" ProgressTaskTemplate="{StaticResource ProgressTaskDataTemplate}"/>
     </Page.Resources>
     <Grid Background="White">
-        <ScrollViewer VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BorderBrush="SlateGray" BorderThickness="0 0 0 1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="&#xE710;" Background="{x:Null}" FontSize="14" FontFamily="Segoe MDL2 Assets" Command="{Binding AddTaskCommand}"/>
+        </Grid>
+        <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
             <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding TasksVmCollection, Mode=TwoWay}" ItemTemplateSelector="{StaticResource TaskVmTemplateSelector}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

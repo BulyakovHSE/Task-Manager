@@ -34,6 +34,7 @@ namespace Task_Manager_UWP
             SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
         }
 
+        // TODO: Rewrite this shit in MVVM style
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DataContext is MainPageVm m)

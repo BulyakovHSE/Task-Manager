@@ -14,7 +14,7 @@ namespace Task_Manager_UWP.Model
         public static async void Serialize(IEnumerable<T> data)
         {
             string json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings());
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFolder folder = ApplicationData.Current.RoamingFolder;
             StorageFile file = await folder.CreateFileAsync("Tasks.json", CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteTextAsync(file, json);
         }
@@ -26,7 +26,7 @@ namespace Task_Manager_UWP.Model
 
         public static async Task<IEnumerable<T>> Deserialize()
         {
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFolder folder = ApplicationData.Current.RoamingFolder;
             StorageFile file = await folder.GetFileAsync("Tasks.json");
             string json = await FileIO.ReadTextAsync(file);
             return JsonConvert.DeserializeObject<IEnumerable<T>>(json);

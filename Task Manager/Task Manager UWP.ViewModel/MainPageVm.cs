@@ -19,8 +19,8 @@ namespace Task_Manager_UWP.ViewModel
     {
         private string _searchText;
         private Page _currentPage;
-        private TasksPageVm _tasksPage;
-        private SettingsPageVm _settingsPage;
+        private TasksPageVm _tasksPageVm;
+        private SettingsPageVm _settingsPageVm;
 
         public string SearchText
         {
@@ -28,7 +28,7 @@ namespace Task_Manager_UWP.ViewModel
             set
             {
                 _searchText = value;
-                _tasksPage.SearchText = value;
+                _tasksPageVm.SearchText = value;
                 OnPropertyChanged(); 
             }
         }
@@ -39,7 +39,7 @@ namespace Task_Manager_UWP.ViewModel
             {
                 return new DelegateCommand(() =>
                 {
-                    //throw new NotImplementedException();
+                    throw new NotImplementedException();
                 });
             }
         }
@@ -65,17 +65,18 @@ namespace Task_Manager_UWP.ViewModel
                 {
                     switch (id)
                     {
-                        case 0: CurrentPage = new TasksPage { DataContext = _tasksPage }; break;
-                        case 1: CurrentPage = new SettingsPage { DataContext = _settingsPage }; break;
+                        // TODO: Rewrite this shit in MVVM style
+                        case 0: CurrentPage = new TasksPage { DataContext = _tasksPageVm }; break;
+                        case 1: CurrentPage = new SettingsPage { DataContext = _settingsPageVm }; break;
                         default: throw new NotImplementedException();
                     }
                 });
             }
         }
-
+        
         public MainPageVm()
         {
-            _settingsPage = new SettingsPageVm();
+            _settingsPageVm = new SettingsPageVm();
         }
 
         ~MainPageVm()
@@ -85,21 +86,21 @@ namespace Task_Manager_UWP.ViewModel
 
         public void SaveTasks()
         {
-            var taskVmCollection = _tasksPage.TasksVmCollection;
+            var taskVmCollection = _tasksPageVm.TasksVmCollection;
             var taskCollection = from task in taskVmCollection select (task as BaseTaskVm)?.GetTask;
             DataProvider<Task>.Serialize(taskCollection);
         }
 
         public async void LoadTasks()
         {
+            _tasksPageVm = new TasksPageVm();
             ObservableCollection<object> col = new ObservableCollection<object>();
             var taskenum = await DataProvider<Task>.Deserialize();
-            foreach (var task in taskenum)
+            foreach (var task in TasksListMock)
             {
-                if (task.GetTaskType == TaskType.Simple) col.Add(new SimpleTaskVm(task));
-                else if (task.GetTaskType == TaskType.Progress) col.Add(new ProgressTaskVm(task));
+                col.Add(BaseTaskVm.GetTaskVmFromTask(task, _tasksPageVm));
             }
-            _tasksPage = new TasksPageVm() { TasksVmCollection = col };
+            _tasksPageVm.TasksVmCollection = col;
         }
 
         public List<Task> TasksListMock => new List<Task>

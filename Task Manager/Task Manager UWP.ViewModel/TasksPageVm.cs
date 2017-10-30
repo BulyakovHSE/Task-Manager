@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Task_Manager_UWP.Model;
 using Task_Manager_UWP.Views;
 using UWPMVVMLib;
 using UWPMVVMLib.Commands;
+using Task = Task_Manager_UWP.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
@@ -29,6 +32,36 @@ namespace Task_Manager_UWP.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public DelegateCommand AddTaskCommand => new DelegateCommand(async () =>
+        {
+            var add = new AddDialog();
+            add.PrimaryButtonCommand = new DelegateCommand(() =>
+            {
+                var task = new Task { GetTaskType = (TaskType)add.TaskType, Name = add.TaskName, Description = add.Description, PointName = add.PointName, DonePoints = add.DonePoints, AllPointsCount = add.AllPoints};
+                if (SearchMode)
+                {
+                    _tasksVmCollection.Add(BaseTaskVm.GetTaskVmFromTask(task, this));
+                    UpdateSearchResults();
+                }
+                else
+                {
+                    TasksVmCollection.Add(BaseTaskVm.GetTaskVmFromTask(task, this));
+                }
+            });
+            await add.ShowAsync();
+        });
+
+        public SimpleCommand<object> DeleteTaskCommand => new SimpleCommand<object>(item =>
+        {
+            var vm = (item as MenuFlyoutItem)?.DataContext;
+            if (SearchMode)
+            {
+                _tasksVmCollection.Remove(vm);
+                UpdateSearchResults();
+            }
+            else TasksVmCollection.Remove(vm);
+        });
 
         private bool SearchMode
         {
@@ -62,7 +95,7 @@ namespace Task_Manager_UWP.ViewModel
             }
         }
 
-        private void UpdateSearchResults(int searchDelta)
+        private void UpdateSearchResults(int searchDelta = 0)
         {
             var collectionForSearch = SearchMode && searchDelta > 0 ? _searchTaskVmCollection : _tasksVmCollection;
             var orderedTasks = TaskSearcher.GetSatisfyingTasks(
@@ -70,8 +103,7 @@ namespace Task_Manager_UWP.ViewModel
             ObservableCollection<object> col = new ObservableCollection<object>();
             foreach (var task in orderedTasks)
             {
-                if (task.GetTaskType == TaskType.Simple) col.Add(new SimpleTaskVm(task));
-                else if (task.GetTaskType == TaskType.Progress) col.Add(new ProgressTaskVm(task));
+                col.Add(BaseTaskVm.GetTaskVmFromTask(task, this));
             }
             _searchTaskVmCollection = col;
             OnPropertyChanged("TasksVmCollection");

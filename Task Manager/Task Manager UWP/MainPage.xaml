@@ -39,7 +39,7 @@
                          Width="200" BorderThickness="0" Height="50" Padding="14" 
                          PlaceholderText="Search" 
                          Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Canvas Width="200">
+                <Canvas Width="200" Visibility="Collapsed">
                     <StackPanel Orientation="Vertical" 
                                 HorizontalAlignment="Stretch" Canvas.Top="50" Background="DarkGray" Canvas.ZIndex="2">
                         <TextBlock Text="1"/>

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task Manager UWP.ViewModel"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task Manager UWP.Views", "Task Manager UWP.Views\Task Manager UWP.Views.csproj", "{B3FEDA35-E812-4FCC-A40F-CA3B32A2518E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task Manager UWP.Model.Tests", "Task Manager UWP.Model.Tests\Task Manager UWP.Model.Tests.csproj", "{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,26 @@ Global
 		{B3FEDA35-E812-4FCC-A40F-CA3B32A2518E}.Release|x64.Build.0 = Release|x64
 		{B3FEDA35-E812-4FCC-A40F-CA3B32A2518E}.Release|x86.ActiveCfg = Release|x86
 		{B3FEDA35-E812-4FCC-A40F-CA3B32A2518E}.Release|x86.Build.0 = Release|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|ARM.ActiveCfg = Debug|ARM
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|ARM.Build.0 = Debug|ARM
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|ARM.Deploy.0 = Debug|ARM
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|x64.ActiveCfg = Debug|x64
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|x64.Build.0 = Debug|x64
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|x64.Deploy.0 = Debug|x64
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|x86.ActiveCfg = Debug|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|x86.Build.0 = Debug|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Debug|x86.Deploy.0 = Debug|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|Any CPU.ActiveCfg = Release|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|ARM.ActiveCfg = Release|ARM
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|ARM.Build.0 = Release|ARM
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|ARM.Deploy.0 = Release|ARM
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|x64.ActiveCfg = Release|x64
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|x64.Build.0 = Release|x64
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|x64.Deploy.0 = Release|x64
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|x86.ActiveCfg = Release|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|x86.Build.0 = Release|x86
+		{86B6CB14-19CD-46B3-A0F1-01084AC2AE2F}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

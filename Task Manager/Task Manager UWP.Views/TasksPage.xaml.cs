@@ -22,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Task_Manager_UWP.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// A page that that displays a tasks list.
     /// </summary>
     public sealed partial class TasksPage : Page
     {
@@ -52,7 +52,7 @@ namespace Task_Manager_UWP.Views
             if (sender is UserControl s) _draggingElementVm = s.DataContext;
         }
 
-        private ObservableCollection<object> Swap(ObservableCollection<object> enumerable, object A, object B)
+        private static ObservableCollection<object> Swap(ObservableCollection<object> enumerable, object A, object B)
         {
             var res = from str in enumerable select str == A ? B : str == B ? A : str;
             return new ObservableCollection<object>(res);

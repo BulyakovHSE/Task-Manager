@@ -29,6 +29,6 @@ namespace Task_Manager_UWP.ViewModel
             set { _task.IsDone = value; OnPropertyChanged(); }
         }
 
-        public SimpleTaskVm(Task task) : base(task) { }
+        public SimpleTaskVm(Task task, TasksPageVm parentVm) : base(task, parentVm) { }
     }
 }
