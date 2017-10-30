@@ -26,6 +26,8 @@ namespace Task_Manager_UWP.ViewModel
 
         public SimpleCommand<object> DeleteTaskCommand => ParentVm?.DeleteTaskCommand;
 
+        public SimpleCommand<object> EditTaskCommand => ParentVm?.EditTaskCommand;
+
         public static BaseTaskVm GetTaskVmFromTask(Task task, TasksPageVm parentVm)
         {
             if (task.GetTaskType == TaskType.Simple) return new SimpleTaskVm(task, parentVm);

@@ -106,8 +106,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AddDialog.xaml.cs">
-      <DependentUpon>AddDialog.xaml</DependentUpon>
+    <Compile Include="TaskDialog.xaml.cs">
+      <DependentUpon>TaskDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProgressTask.xaml.cs">
       <DependentUpon>ProgressTask.xaml</DependentUpon>
@@ -131,7 +131,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="AddDialog.xaml">
+    <Page Include="TaskDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

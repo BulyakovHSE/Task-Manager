@@ -35,10 +35,11 @@ namespace Task_Manager_UWP.ViewModel
 
         public DelegateCommand AddTaskCommand => new DelegateCommand(async () =>
         {
-            var add = new AddDialog();
+            var add = new TaskDialog{Title = "Add a task", PrimaryButtonText = "Add"};
             add.PrimaryButtonCommand = new DelegateCommand(() =>
             {
-                var task = new Task { GetTaskType = (TaskType)add.TaskType, Name = add.TaskName, Description = add.Description, PointName = add.PointName, DonePoints = add.DonePoints, AllPointsCount = add.AllPoints};
+                var task = new Task { GetTaskType = (TaskType)add.TaskType, Name = add.TaskName,
+                    Description = add.Description, PointName = add.PointName, DonePoints = add.DonePoints, AllPointsCount = add.AllPoints};
                 if (SearchMode)
                 {
                     _tasksVmCollection.Add(BaseTaskVm.GetTaskVmFromTask(task, this));
@@ -50,6 +51,28 @@ namespace Task_Manager_UWP.ViewModel
                 }
             });
             await add.ShowAsync();
+        });
+
+        public SimpleCommand<object> EditTaskCommand => new SimpleCommand<object>(async item =>
+        {
+            var vm = (item as MenuFlyoutItem)?.DataContext;
+            var editingTask = (vm as BaseTaskVm)?.GetTask;
+            var edit = new TaskDialog{Title = "Edit a task", PrimaryButtonText = "Apply", TaskName = editingTask.Name,
+                Description = editingTask.Description, TaskType = (int)editingTask.GetTaskType,
+                DonePoints = editingTask.DonePoints, AllPoints = editingTask.AllPointsCount, PointName = editingTask.PointName};
+            edit.PrimaryButtonCommand = new DelegateCommand(() =>
+            {
+                var task = new Task { GetTaskType = (TaskType)edit.TaskType, Name = edit.TaskName,
+                    Description = edit.Description, PointName = edit.PointName, DonePoints = edit.DonePoints, AllPointsCount = edit.AllPoints };
+                if (SearchMode)
+                {
+                    if(_tasksVmCollection.Remove(vm))
+                        _tasksVmCollection.Add(BaseTaskVm.GetTaskVmFromTask(task, this));
+                    UpdateSearchResults();
+                }
+                else if(TasksVmCollection.Remove(vm)) TasksVmCollection.Add(BaseTaskVm.GetTaskVmFromTask(task, this));
+            });
+            await edit.ShowAsync();
         });
 
         public SimpleCommand<object> DeleteTaskCommand => new SimpleCommand<object>(item =>

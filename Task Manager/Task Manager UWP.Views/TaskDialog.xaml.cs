@@ -20,36 +20,30 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Task_Manager_UWP.Views
 {
-    public sealed partial class AddDialog : ContentDialog, INotifyPropertyChanged
+    public sealed partial class TaskDialog : ContentDialog, INotifyPropertyChanged
     {
-        private bool _isProgress;
+        private int _taskType;
 
-        public AddDialog()
+        public TaskDialog()
         {
             this.InitializeComponent();
             DataContext = this;
         }
 
-        public bool IsProgress
-        {
-            get => _isProgress;
-            set { _isProgress = value; OnPropertyChanged(); }
-        }
+        public bool IsProgress => _taskType == 1;
 
-        public int TaskType { get; set; }
+        public int TaskType
+        {
+            get => _taskType;
+            set
+            {
+                _taskType = value;
+                OnPropertyChanged();
+                OnPropertyChanged("IsProgress");
+            }
+        }
 
         public ObservableCollection<string> TaskTypes => new ObservableCollection<string>(new[]{"Simple", "Progress"});
-
-        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var combo = (sender as ComboBox);
-            TaskType = combo?.SelectedIndex ?? 0;
-            switch (TaskType)
-            {
-                case 1: IsProgress = true; break;
-                default: IsProgress = false; break;
-            } 
-        }
 
         public string TaskName { get; set; }
 

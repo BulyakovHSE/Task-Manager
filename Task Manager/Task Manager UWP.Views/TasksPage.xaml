@@ -8,12 +8,14 @@
     mc:Ignorable="d">
     <Page.Resources>
         <MenuFlyout x:Key="TaskFlyout">
-            <MenuFlyoutItem Text="Edit">
+            <MenuFlyoutItem Text="Edit" Command="{Binding EditTaskCommand, Source={Binding DataContext}}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Source={Binding DataContext}}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE70F;"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Text="Delete" Command="{Binding DeleteTaskCommand, Source={Binding DataContext}}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Source={Binding DataContext}}">
+            <MenuFlyoutItem Text="Delete" Command="{Binding DeleteTaskCommand, Source={Binding DataContext}}" 
+                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Source={Binding DataContext}}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE74D;"/>
                 </MenuFlyoutItem.Icon>
@@ -36,7 +38,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="&#xE710;" Background="{x:Null}" FontSize="14" FontFamily="Segoe MDL2 Assets" Command="{Binding AddTaskCommand}"/>
+            <Button Content="&#xE710;" Grid.Column="0" Background="{x:Null}" FontSize="14" FontFamily="Segoe MDL2 Assets" Command="{Binding AddTaskCommand}"/>
         </Grid>
         <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
             <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding TasksVmCollection, Mode=TwoWay}" ItemTemplateSelector="{StaticResource TaskVmTemplateSelector}">
