@@ -112,6 +112,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsPageVm.cs" />
     <Compile Include="SimpleTaskVm.cs" />
+    <Compile Include="TaskDialogVm.cs" />
     <Compile Include="TasksPageVm.cs" />
     <EmbeddedResource Include="Properties\Task_Manager_UWP.ViewModel.rd.xml" />
   </ItemGroup>

@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:UWPMVVMLib.Converters"
     mc:Ignorable="d"
-    IsPrimaryButtonEnabled="True"
+    IsPrimaryButtonEnabled="{Binding IsPrimaryBtnEnabled}"
     IsSecondaryButtonEnabled="False"
     CloseButtonText="Cancel">
     <ContentDialog.Resources>
@@ -19,6 +19,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0" Text="{Binding TaskName, Mode=TwoWay}" PlaceholderText="Name" Margin="0 0 0 3"/>
         <TextBox Grid.Row="1" Text="{Binding Description, Mode=TwoWay}" PlaceholderText="Description" Margin="0 0 0 3"/>
@@ -29,14 +30,20 @@
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
             <TextBox Text="{Binding PointName, Mode=TwoWay}" PlaceholderText="Point of progress name" Grid.Row="0" Margin="0 0 0 3"/>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Width="300">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Text="{Binding DonePoints, Mode=TwoWay}" PlaceholderText="Done points" Margin="0 0 3 0"/>
-                <TextBox Grid.Column="1" Text="{Binding AllPoints, Mode=TwoWay}" PlaceholderText="Points count"/>
+                <TextBox Grid.Column="0" Text="{Binding DonePoints, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" 
+                         BorderBrush="{Binding DonePointsBorderBrush}" 
+                         PlaceholderText="Done points" Margin="0 0 3 0"/>
+                <TextBox Grid.Column="1" BorderBrush="{Binding AllPointsBorderBrush}" 
+                         Text="{Binding AllPoints, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}" 
+                         PlaceholderText="Points count"/>
             </Grid>
         </Grid>
+        <TextBlock Grid.Row="4" Visibility="{Binding Incorrect, Converter={StaticResource BoolToVisibilityConverter}}" 
+                   Text="{Binding ErrorMessage}" TextWrapping="WrapWholeWords" Foreground="Red" Margin="0 3 0 0"/>
     </Grid>
 </ContentDialog>

@@ -127,7 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.4.0</Version>
+      <Version>6.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +160,12 @@
       <Project>{d5581a5d-6ee7-4bf8-96f3-224998c9ff12}</Project>
       <Name>UWPMVVMLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\progressHighLow.png" />
+    <Content Include="Icons\progressLowHigh.png" />
+    <Content Include="Icons\sortAZ.png" />
+    <Content Include="Icons\sortZA.png" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

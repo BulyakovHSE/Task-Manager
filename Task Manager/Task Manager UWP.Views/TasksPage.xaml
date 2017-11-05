@@ -5,6 +5,8 @@
     xmlns:local="using:Task_Manager_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interop="using:Windows.UI.Xaml.Interop"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
     <Page.Resources>
         <MenuFlyout x:Key="TaskFlyout">
@@ -39,6 +41,63 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Button Content="&#xE710;" Grid.Column="0" Background="{x:Null}" FontSize="14" FontFamily="Segoe MDL2 Assets" Command="{Binding AddTaskCommand}"/>
+            <RelativePanel HorizontalAlignment="Right">
+                <Button Background="{x:Null}" RelativePanel.LeftOf="sortByDescBtn" Command="{Binding SortByNameCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Name" Margin="0 0 2 0" VerticalAlignment="Center"/>
+                        <Image>
+                            <Interactivity:Interaction.Behaviors>
+                                <Interactions:DataTriggerBehavior Binding="{Binding IsSortByNameHighToLow}" ComparisonCondition="Equal" Value="True">
+                                    <Interactions:ChangePropertyAction PropertyName="Source" Value="Icons/sortAZ.png"/>
+                                </Interactions:DataTriggerBehavior>
+                                <Interactions:DataTriggerBehavior Binding="{Binding IsSortByNameHighToLow}" ComparisonCondition="Equal" Value="False">
+                                    <Interactions:ChangePropertyAction PropertyName="Source" Value="Icons/sortZA.png"/>
+                                </Interactions:DataTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Image>
+                    </StackPanel>
+                </Button>
+                <Button Background="{x:Null}" x:Name="sortByDescBtn" RelativePanel.LeftOf="sortByProgressBtn">
+                    <Interactivity:Interaction.Behaviors>
+                        <Interactions:EventTriggerBehavior EventName="Click">
+                            <Interactions:InvokeCommandAction Command="{Binding SortByDescriptionCommand}"/>
+                        </Interactions:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Description" Margin="0 0 2 0" VerticalAlignment="Center"/>
+                        <Image>
+                            <Interactivity:Interaction.Behaviors>
+                                <Interactions:DataTriggerBehavior Binding="{Binding IsSortByDescriptionHighToLow}" ComparisonCondition="Equal" Value="True">
+                                    <Interactions:ChangePropertyAction PropertyName="Source" Value="Icons/sortAZ.png"/>
+                                </Interactions:DataTriggerBehavior>
+                                <Interactions:DataTriggerBehavior Binding="{Binding IsSortByDescriptionHighToLow}" ComparisonCondition="Equal" Value="False">
+                                    <Interactions:ChangePropertyAction PropertyName="Source" Value="Icons/sortZA.png"/>
+                                </Interactions:DataTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Image>
+                    </StackPanel>
+                </Button>
+                <Button Background="{x:Null}" x:Name="sortByProgressBtn" RelativePanel.AlignRightWithPanel="True">
+                    <Interactivity:Interaction.Behaviors>
+                        <Interactions:EventTriggerBehavior EventName="Click">
+                            <Interactions:InvokeCommandAction Command="{Binding SortByProgressCommand}"/>
+                        </Interactions:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Progress" Margin="0 0 2 0" VerticalAlignment="Center"/>
+                        <Image>
+                            <Interactivity:Interaction.Behaviors>
+                                <Interactions:DataTriggerBehavior Binding="{Binding IsSortByProgressHighToLow}" ComparisonCondition="Equal" Value="True">
+                                    <Interactions:ChangePropertyAction PropertyName="Source" Value="Icons/progressHighLow.png"/>
+                                </Interactions:DataTriggerBehavior>
+                                <Interactions:DataTriggerBehavior Binding="{Binding IsSortByProgressHighToLow}" ComparisonCondition="Equal" Value="False">
+                                    <Interactions:ChangePropertyAction PropertyName="Source" Value="Icons/progressLowHigh.png"/>
+                                </Interactions:DataTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Image>
+                    </StackPanel>
+                </Button>
+            </RelativePanel>
         </Grid>
         <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
             <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding TasksVmCollection, Mode=TwoWay}" ItemTemplateSelector="{StaticResource TaskVmTemplateSelector}">
