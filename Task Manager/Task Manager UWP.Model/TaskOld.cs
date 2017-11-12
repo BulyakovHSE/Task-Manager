@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Task_Manager_UWP.Model
 {
     [Serializable]
-    public class Task
+    public class TaskOld
     {
         public string Name { get; set; }
 
@@ -23,17 +23,17 @@ namespace Task_Manager_UWP.Model
 
         public string PointName { get; set; }
 
-        public TaskType GetTaskType { get; set; }
+        public TaskTypeEnum TaskType { get; set; }
 
         public override int GetHashCode()
         {
             return GetStringHashCode(Name) + GetStringHashCode(Description) + DonePoints +
-                   AllPointsCount + (GetTaskType == TaskType.Progress ? GetStringHashCode(PointName) : 0);
+                   AllPointsCount + (TaskType == TaskTypeEnum.Progress ? GetStringHashCode(PointName) : 0);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is Task task) return GetHashCode() == task.GetHashCode();
+            if (obj is TaskOld task) return GetHashCode() == task.GetHashCode();
             return false;
         }
 
@@ -43,16 +43,16 @@ namespace Task_Manager_UWP.Model
             return s.Sum(ch => char.ConvertToUtf32(ch.ToString(), 0) * i++);
         }
 
-        public static IEnumerable<Task> GetSatisfyingTasks(IEnumerable<Task> tasks, string searchRequest)
+        public static IEnumerable<TaskOld> GetSatisfyingTasks(IEnumerable<TaskOld> tasks, string searchRequest)
         {
             searchRequest = searchRequest.ToLower();
-            Dictionary<Task, int> suitability = new Dictionary<Task, int>();
+            Dictionary<TaskOld, int> suitability = new Dictionary<TaskOld, int>();
             foreach (var task in tasks)
             {
                 int suitable = 0;
                 suitable += new Regex(searchRequest).Matches(task.Name.ToLower()).Count;
                 suitable += new Regex(searchRequest).Matches(task.Description.ToLower()).Count;
-                if (task.GetTaskType == TaskType.Progress)
+                if (task.TaskType == TaskTypeEnum.Progress)
                     suitable += new Regex(searchRequest).Matches(task.PointName.ToLower()).Count;
                 suitability.Add(task, suitable);
             }
@@ -60,35 +60,35 @@ namespace Task_Manager_UWP.Model
             return from keyValuePair in ordered where keyValuePair.Value > 0 select keyValuePair.Key;
         }
 
-        public static IEnumerable<Task> OrderByName(IEnumerable<Task> tasks, bool inverse = false)
+        public static IEnumerable<TaskOld> OrderByName(IEnumerable<TaskOld> tasks, bool inverse = false)
         {
             var ordered = tasks.OrderBy(task => task.Name);
             if (inverse) return ordered.Reverse();
             return ordered;
         }
 
-        public static IEnumerable<Task> OrderByDescription(IEnumerable<Task> tasks, bool inverse = false)
+        public static IEnumerable<TaskOld> OrderByDescription(IEnumerable<TaskOld> tasks, bool inverse = false)
         {
             var ordered = tasks.OrderBy(task => task.Description);
             if (inverse) return ordered.Reverse();
             return ordered;
         }
 
-        public static IEnumerable<Task> OrderByTaskType(IEnumerable<Task> tasks, bool inverse = false)
+        public static IEnumerable<TaskOld> OrderByTaskType(IEnumerable<TaskOld> tasks, bool inverse = false)
         {
-            var ordered = tasks.OrderBy(task => task.GetTaskType);
+            var ordered = tasks.OrderBy(task => task.TaskType);
             if (inverse) return ordered.Reverse();
             return ordered;
         }
 
-        public static IEnumerable<Task> OrderByTaskProgress(IEnumerable<Task> tasks, bool inverse = false)
+        public static IEnumerable<TaskOld> OrderByTaskProgress(IEnumerable<TaskOld> tasks, bool inverse = false)
         {
-            var ordered = tasks.OrderBy(task => task.GetTaskType == TaskType.Progress ? (double)task.DonePoints / task.AllPointsCount : BoolToByte(task.IsDone));
+            var ordered = tasks.OrderBy(task => task.TaskType == TaskTypeEnum.Progress ? (double)task.DonePoints / task.AllPointsCount : BoolToByte(task.IsDone));
             if (inverse) return ordered.Reverse();
             return ordered;
         }
 
-        private static byte BoolToByte(bool value)
+        private static double BoolToByte(bool value)
         {
             if (value) return 1;
             return 0;
@@ -96,7 +96,7 @@ namespace Task_Manager_UWP.Model
     }
 
     [Serializable]
-    public enum TaskType
+    public enum TaskTypeEnum
     {
         Simple, Progress
     }

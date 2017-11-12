@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task_Manager_UWP.Model;
 using UWPMVVMLib;
 using UWPMVVMLib.Commands;
-using Task = Task_Manager_UWP.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
@@ -13,47 +13,47 @@ namespace Task_Manager_UWP.ViewModel
     {
         public string Name
         {
-            get => _task.Name;
-            set { _task.Name = value; OnPropertyChanged(); }
+            get => TaskOld.Name;
+            set { TaskOld.Name = value; OnPropertyChanged(); }
         }
 
         public string Description
         {
-            get => _task.Description;
-            set { _task.Description = value; OnPropertyChanged(); }
+            get => TaskOld.Description;
+            set { TaskOld.Description = value; OnPropertyChanged(); }
         }
 
         public int DonePoints
         {
-            get => _task.DonePoints;
-            set { _task.DonePoints = value; OnPropertyChanged(); }
+            get => TaskOld.DonePoints;
+            set { TaskOld.DonePoints = value; OnPropertyChanged(); }
         }
 
-        public int AllPointsCount => _task.AllPointsCount;
+        public int AllPointsCount => TaskOld.AllPointsCount;
 
         public string PointName
         {
-            get => _task.PointName;
-            set { _task.PointName = value; OnPropertyChanged(); }
+            get => TaskOld.PointName;
+            set { TaskOld.PointName = value; OnPropertyChanged(); }
         }
 
         public DelegateCommand DecreaseCommand => new DelegateCommand(() =>
         {
-            if (_task.DonePoints > 0)
+            if (TaskOld.DonePoints > 0)
                 DonePoints = DonePoints - 1;
         });
 
         public DelegateCommand IncreaseCommand => new DelegateCommand(() =>
         {
-            if (_task.DonePoints < _task.AllPointsCount)
+            if (TaskOld.DonePoints < TaskOld.AllPointsCount)
                 DonePoints = DonePoints + 1;
         });
 
         public DelegateCommand CompleteCommand => new DelegateCommand(() =>
         {
-            DonePoints = _task.AllPointsCount;
+            DonePoints = TaskOld.AllPointsCount;
         });
 
-        public ProgressTaskVm(Task task, TasksPageVm parentVm) : base(task, parentVm) { }
+        public ProgressTaskVm(TaskOld taskOld, TasksPageVm parentVm) : base(taskOld, parentVm) { }
     }
 }

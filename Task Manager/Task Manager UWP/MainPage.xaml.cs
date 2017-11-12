@@ -26,21 +26,8 @@ namespace Task_Manager_UWP
     {
         public MainPage()
         {
+            DataContext = new MainPageVm();
             this.InitializeComponent();
-        }
-
-        private void HumburgerMenuBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-            SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
-        }
-
-        // TODO: Rewrite this shit in MVVM style
-        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DataContext is MainPageVm m)
-            {
-                m.ListBoxSelectionChangedCommand.Execute((sender as ListBox)?.SelectedIndex);
-            }
         }
     }
 }

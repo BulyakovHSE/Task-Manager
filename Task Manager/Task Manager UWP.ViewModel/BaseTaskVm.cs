@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 using Task_Manager_UWP.Model;
 using UWPMVVMLib;
 using UWPMVVMLib.Commands;
-using Task = Task_Manager_UWP.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
     public class BaseTaskVm : ViewModelBase
     {
-        protected Task _task;
+        protected TaskOld TaskOld;
 
-        public Task GetTask => _task;
+        public TaskOld GetTaskOld => TaskOld;
 
-        public BaseTaskVm(Task task, TasksPageVm parentVm)
+        public BaseTaskVm(TaskOld taskOld, TasksPageVm parentVm)
         {
-            _task = task;
+            TaskOld = taskOld;
             ParentVm = parentVm;
         }
 
@@ -28,22 +27,22 @@ namespace Task_Manager_UWP.ViewModel
 
         public SimpleCommand<object> EditTaskCommand => ParentVm?.EditTaskCommand;
 
-        public static BaseTaskVm GetTaskVmFromTask(Task task, TasksPageVm parentVm)
+        public static BaseTaskVm GetTaskVmFromTask(TaskOld taskOld, TasksPageVm parentVm)
         {
-            if (task.GetTaskType == TaskType.Simple) return new SimpleTaskVm(task, parentVm);
-            if (task.GetTaskType == TaskType.Progress) return new ProgressTaskVm(task, parentVm);
+            if (taskOld.TaskType == TaskTypeEnum.Simple) return new SimpleTaskVm(taskOld, parentVm);
+            if (taskOld.TaskType == TaskTypeEnum.Progress) return new ProgressTaskVm(taskOld, parentVm);
             return null;
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is BaseTaskVm t) return _task.Equals(t._task);
+            if (obj is BaseTaskVm t) return TaskOld.Equals(t.TaskOld);
             return false;
         }
 
         public override int GetHashCode()
         {
-            return _task.GetHashCode();
+            return TaskOld.GetHashCode();
         }
     }
 }

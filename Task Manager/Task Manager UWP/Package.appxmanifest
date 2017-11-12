@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="dccfef78-b01d-406e-93b4-31e512264f20" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Task Manager UWP</DisplayName>
+    <DisplayName>TaskOld Manager UWP</DisplayName>
     <PublisherDisplayName>Bulya</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="Task_Manager_UWP.App">
+      EntryPoint="TaskOld_Manager_UWP.App">
       <uap:VisualElements
-        DisplayName="Task Manager UWP"
+        DisplayName="TaskOld Manager UWP"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Task Manager UWP"
+        Description="TaskOld Manager UWP"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
