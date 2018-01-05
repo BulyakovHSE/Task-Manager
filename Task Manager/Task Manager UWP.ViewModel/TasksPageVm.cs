@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
-using Task_Manager_UWP.Model;
+using Task_Manager.Model;
 using Task_Manager_UWP.Views;
 using UWPMVVMLib;
 using UWPMVVMLib.Commands;
+using Task = Task_Manager.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
@@ -86,12 +87,12 @@ namespace Task_Manager_UWP.ViewModel
 
         public DelegateCommand AddTaskCommand => new DelegateCommand(async () =>
         {
-            var add = new TaskDialog { Title = "Add a taskOld", PrimaryButtonText = "Add", DataContext = new TaskDialogVm() };
+            var add = new TaskDialog { Title = "Add a task", PrimaryButtonText = "Add", DataContext = new TaskDialogVm() };
             add.PrimaryButtonCommand = new DelegateCommand(() =>
             {
                 if (add.DataContext is TaskDialogVm vm)
                 {
-                    var task = new TaskOld
+                    var task = new Task
                     {
                         TaskType = (TaskTypeEnum)vm.TaskType,
                         Name = vm.TaskName,
@@ -117,10 +118,10 @@ namespace Task_Manager_UWP.ViewModel
         public SimpleCommand<object> EditTaskCommand => new SimpleCommand<object>(async item =>
         {
             var vm = (item as MenuFlyoutItem)?.DataContext;
-            var editingTask = (vm as BaseTaskVm)?.GetTaskOld;
+            var editingTask = (vm as BaseTaskVm)?.GetTask;
             var edit = new TaskDialog
             {
-                Title = "Edit a taskOld",
+                Title = "Edit a task",
                 PrimaryButtonText = "Apply",
                 DataContext = new TaskDialogVm
                 {
@@ -136,7 +137,7 @@ namespace Task_Manager_UWP.ViewModel
             {
                 if (edit.DataContext is TaskDialogVm editVm)
                 {
-                    var task = new TaskOld
+                    var task = new Task
                     {
                         TaskType = (TaskTypeEnum)editVm.TaskType,
                         Name = editVm.TaskName,
@@ -180,21 +181,21 @@ namespace Task_Manager_UWP.ViewModel
         {
             if (!SearchMode)
             {
-                var tasks = from taskVm in _tasksVmCollection select (taskVm as BaseTaskVm)?.GetTaskOld;
-                tasks = TaskOld.OrderByName(tasks, _sortNameClickCount % 2 == 1);
+                var tasks = from taskVm in _tasksVmCollection select (taskVm as BaseTaskVm)?.GetTask;
+                tasks = Task.OrderByName(tasks, _sortNameClickCount % 2 == 1);
                 TasksVmCollection =
                     new ObservableCollection<object>(from task in tasks
                                                      select (object)BaseTaskVm.GetTaskVmFromTask(task, this));
-                OnPropertyChanged("IsSortByNameHighToLow");
+                OnPropertyChanged(nameof(IsSortByNameHighToLow));
                 if (_sortProgressClickCount != 0)
                 {
                     _sortProgressClickCount = 0;
-                    OnPropertyChanged("IsSortByProgressHighToLow");
+                    OnPropertyChanged(nameof(IsSortByProgressHighToLow));
                 }
                 if (_sortDescriptionClickCount != 0)
                 {
                     _sortDescriptionClickCount = 0;
-                    OnPropertyChanged("IsSortByDescriptionHighToLow");
+                    OnPropertyChanged(nameof(IsSortByDescriptionHighToLow));
                 }
                 _sortNameClickCount++;
             }
@@ -204,12 +205,12 @@ namespace Task_Manager_UWP.ViewModel
         {
             if (!SearchMode)
             {
-                var tasks = from taskVm in _tasksVmCollection select (taskVm as BaseTaskVm)?.GetTaskOld;
-                tasks = TaskOld.OrderByDescription(tasks, _sortDescriptionClickCount % 2 == 1);
+                var tasks = from taskVm in _tasksVmCollection select (taskVm as BaseTaskVm)?.GetTask;
+                tasks = Task.OrderByDescription(tasks, _sortDescriptionClickCount % 2 == 1);
                 TasksVmCollection =
                     new ObservableCollection<object>(from task in tasks
                                                      select (object)BaseTaskVm.GetTaskVmFromTask(task, this));
-                OnPropertyChanged("IsSortByDescriptionHighToLow");
+                OnPropertyChanged(nameof(IsSortByDescriptionHighToLow));
                 if (_sortNameClickCount != 0)
                 {
                     _sortNameClickCount = 0;
@@ -228,8 +229,8 @@ namespace Task_Manager_UWP.ViewModel
         {
             if (!SearchMode)
             {
-                var tasks = from taskVm in _tasksVmCollection select (taskVm as BaseTaskVm)?.GetTaskOld;
-                tasks = TaskOld.OrderByTaskProgress(tasks, _sortProgressClickCount % 2 == 1);
+                var tasks = from taskVm in _tasksVmCollection select (taskVm as BaseTaskVm)?.GetTask;
+                tasks = Task.OrderByTaskProgress(tasks, _sortProgressClickCount % 2 == 1);
                 TasksVmCollection =
                     new ObservableCollection<object>(from task in tasks
                                                      select (object)BaseTaskVm.GetTaskVmFromTask(task, this));
@@ -242,7 +243,7 @@ namespace Task_Manager_UWP.ViewModel
                 if (_sortDescriptionClickCount != 0)
                 {
                     _sortDescriptionClickCount = 0;
-                    OnPropertyChanged("IsSortByDescriptionHighToLow");
+                    OnPropertyChanged(nameof(IsSortByDescriptionHighToLow));
                 }
                 _sortProgressClickCount++;
             }
@@ -260,8 +261,8 @@ namespace Task_Manager_UWP.ViewModel
         private void UpdateSearchResults(int searchDelta = 0)
         {
             var collectionForSearch = SearchMode && searchDelta > 0 ? _searchTaskVmCollection : _tasksVmCollection;
-            var orderedTasks = TaskOld.GetSatisfyingTasks(
-                from taskVm in collectionForSearch select (taskVm as BaseTaskVm)?.GetTaskOld, SearchText);
+            var orderedTasks = Task.GetSatisfyingTasks(
+                from taskVm in collectionForSearch select (taskVm as BaseTaskVm)?.GetTask, SearchText);
             ObservableCollection<object> col = new ObservableCollection<object>();
             foreach (var task in orderedTasks)
             {

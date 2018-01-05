@@ -8,9 +8,11 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Task_Manager_UWP.Views;
-using Task_Manager_UWP.Model;
+using Task_Manager.Model;
 using UWPMVVMLib;
 using UWPMVVMLib.Commands;
+using Microsoft.EntityFrameworkCore;
+using Task = Task_Manager.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
@@ -61,15 +63,15 @@ namespace Task_Manager_UWP.ViewModel
 
         public string CurrentPageName => _currentPage?.Name;
 
-        public List<TaskOld> TasksListMock => new List<TaskOld>
-        {
-            new TaskOld{Name = "1", Description = "Первая задача", IsDone = false, TaskType = TaskTypeEnum.Simple},
-            new TaskOld{Name = "2", Description = "Вторая задача", IsDone = false, TaskType = TaskTypeEnum.Simple},
-            new TaskOld{Name = "4", Description = "Выучить", IsDone = false, DonePoints = 0, AllPointsCount = 5, PointName = "Слов", TaskType = TaskTypeEnum.Progress},
-            new TaskOld{Name = "5", Description = "Прочесть", IsDone = false, DonePoints = 3, AllPointsCount = 10, PointName = "Книг", TaskType = TaskTypeEnum.Progress},
-            new TaskOld{Name = "3", Description = "Третья задача.  очень длинная задача "
-                                               +"авмоадивалаоллллллллллллллллллллллллллллллавоалымодвлаоидавомитавилаотилавтилавргкрмвоитлаито. Конец", IsDone = false, TaskType = TaskTypeEnum.Simple}
-        };
+        //public List<Task> TasksListMock => new List<Task>
+        //{
+        //    new Task{Name = "1", Description = "Первая задача", IsDone = false, TaskType = TaskTypeEnum.Simple},
+        //    new Task{Name = "2", Description = "Вторая задача", IsDone = false, TaskType = TaskTypeEnum.Simple},
+        //    new Task{Name = "4", Description = "Выучить", IsDone = false, DonePoints = 0, AllPointsCount = 5, PointName = "Слов", TaskType = TaskTypeEnum.Progress},
+        //    new Task{Name = "5", Description = "Прочесть", IsDone = false, DonePoints = 3, AllPointsCount = 10, PointName = "Книг", TaskType = TaskTypeEnum.Progress},
+        //    new Task{Name = "3", Description = "Третья задача.  очень длинная задача "
+        //                                       +"авмоадивалаоллллллллллллллллллллллллллллллавоалымодвлаоидавомитавилаотилавтилавргкрмвоитлаито. Конец", IsDone = false, TaskType = TaskTypeEnum.Simple}
+        //};
 
         #endregion
 
@@ -122,21 +124,24 @@ namespace Task_Manager_UWP.ViewModel
 
         public void SaveTasks()
         {
-            var taskVmCollection = _tasksPageVm.TasksVmCollection;
-            var taskCollection = from task in taskVmCollection select (task as BaseTaskVm)?.GetTaskOld;
-            DataProvider<TaskOld>.Serialize(taskCollection);
+        //    var taskVmCollection = _tasksPageVm.TasksVmCollection;
+        //    var taskCollection = from task in taskVmCollection select (task as BaseTaskVm)?.GetTask;
+        //    DataProvider<Task>.Serialize(taskCollection);
         }
 
-        public async void LoadTasks()
+        public void LoadTasks()
         {
             _tasksPageVm = new TasksPageVm();
             ObservableCollection<object> col = new ObservableCollection<object>();
-            var taskenum = await DataProvider<TaskOld>.Deserialize();
-            foreach (var task in TasksListMock)
+            using (var db = new TasksContext())
             {
-                col.Add(BaseTaskVm.GetTaskVmFromTask(task, _tasksPageVm));
+                foreach (var task in db.Tasks)
+                {
+                    col.Add(BaseTaskVm.GetTaskVmFromTask(task, _tasksPageVm));
+                }
+                _tasksPageVm.TasksVmCollection = col;
             }
-            _tasksPageVm.TasksVmCollection = col;
+            
         }
     }
 }

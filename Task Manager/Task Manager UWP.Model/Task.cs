@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Task_Manager_UWP.Model.ADO.NET
+namespace Task_Manager_UWP.Model
 {
-    public class TasksContext
-    {
-
-    }
+    
 }

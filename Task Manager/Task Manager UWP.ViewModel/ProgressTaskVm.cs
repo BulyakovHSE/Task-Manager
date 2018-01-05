@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Task_Manager_UWP.Model;
 using UWPMVVMLib;
 using UWPMVVMLib.Commands;
+using Task = Task_Manager.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
@@ -13,47 +14,47 @@ namespace Task_Manager_UWP.ViewModel
     {
         public string Name
         {
-            get => TaskOld.Name;
-            set { TaskOld.Name = value; OnPropertyChanged(); }
+            get => Task.Name;
+            set { Task.Name = value; OnPropertyChanged(); }
         }
 
         public string Description
         {
-            get => TaskOld.Description;
-            set { TaskOld.Description = value; OnPropertyChanged(); }
+            get => Task.Description;
+            set { Task.Description = value; OnPropertyChanged(); }
         }
 
         public int DonePoints
         {
-            get => TaskOld.DonePoints;
-            set { TaskOld.DonePoints = value; OnPropertyChanged(); }
+            get => Task.DonePoints;
+            set { Task.DonePoints = value; OnPropertyChanged(); }
         }
 
-        public int AllPointsCount => TaskOld.AllPointsCount;
+        public int AllPointsCount => Task.AllPointsCount;
 
         public string PointName
         {
-            get => TaskOld.PointName;
-            set { TaskOld.PointName = value; OnPropertyChanged(); }
+            get => Task.PointName;
+            set { Task.PointName = value; OnPropertyChanged(); }
         }
 
         public DelegateCommand DecreaseCommand => new DelegateCommand(() =>
         {
-            if (TaskOld.DonePoints > 0)
+            if (Task.DonePoints > 0)
                 DonePoints = DonePoints - 1;
         });
 
         public DelegateCommand IncreaseCommand => new DelegateCommand(() =>
         {
-            if (TaskOld.DonePoints < TaskOld.AllPointsCount)
+            if (Task.DonePoints < Task.AllPointsCount)
                 DonePoints = DonePoints + 1;
         });
 
         public DelegateCommand CompleteCommand => new DelegateCommand(() =>
         {
-            DonePoints = TaskOld.AllPointsCount;
+            DonePoints = Task.AllPointsCount;
         });
 
-        public ProgressTaskVm(TaskOld taskOld, TasksPageVm parentVm) : base(taskOld, parentVm) { }
+        public ProgressTaskVm(Task task, TasksPageVm parentVm) : base(task, parentVm) { }
     }
 }

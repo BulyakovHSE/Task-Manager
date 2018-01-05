@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Task_Manager_UWP.ViewModel;
+using Microsoft.EntityFrameworkCore;
+using Task_Manager.Model;
 
 namespace Task_Manager_UWP
 {
@@ -32,6 +34,10 @@ namespace Task_Manager_UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            using (var db = new TasksContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         /// <summary>

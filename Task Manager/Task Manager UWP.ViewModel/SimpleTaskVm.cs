@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UWPMVVMLib;
 using Task_Manager_UWP.Model;
 using UWPMVVMLib.Commands;
+using Task = Task_Manager.Model.Task;
 
 namespace Task_Manager_UWP.ViewModel
 {
@@ -13,22 +14,22 @@ namespace Task_Manager_UWP.ViewModel
     {
         public string Name
         {
-            get => TaskOld.Name;
-            set { TaskOld.Name = value; OnPropertyChanged(); }
+            get => Task.Name;
+            set { Task.Name = value; OnPropertyChanged(); }
         }
 
         public string Description
         {
-            get => TaskOld.Description;
-            set { TaskOld.Description = value; OnPropertyChanged(); }
+            get => Task.Description;
+            set { Task.Description = value; OnPropertyChanged(); }
         }
 
         public bool IsDone
         {
-            get => TaskOld.IsDone;
-            set { TaskOld.IsDone = value; OnPropertyChanged(); }
+            get => Task.IsDone;
+            set { Task.IsDone = value; OnPropertyChanged(); }
         }
 
-        public SimpleTaskVm(TaskOld taskOld, TasksPageVm parentVm) : base(taskOld, parentVm) { }
+        public SimpleTaskVm(Task task, TasksPageVm parentVm) : base(task, parentVm) { }
     }
 }
